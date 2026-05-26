@@ -41,7 +41,11 @@ export default function Users() {
       form.resetFields();
       message.success('User created successfully');
     },
-    onError: (err: any) => message.error(err.response?.data?.detail || 'Failed to create user'),
+    onError: (err: any) => {
+      const detail = err.response?.data?.detail;
+      const msg = Array.isArray(detail) ? detail.map((d: any) => d.msg).join(', ') : detail || 'Failed to create user';
+      message.error(msg);
+    },
   });
 
   const updateMutation = useMutation({
@@ -53,7 +57,11 @@ export default function Users() {
       form.resetFields();
       message.success('User updated successfully');
     },
-    onError: (err: any) => message.error(err.response?.data?.detail || 'Failed to update user'),
+    onError: (err: any) => {
+      const detail = err.response?.data?.detail;
+      const msg = Array.isArray(detail) ? detail.map((d: any) => d.msg).join(', ') : detail || 'Failed to update user';
+      message.error(msg);
+    },
   });
 
   const deleteMutation = useMutation({
